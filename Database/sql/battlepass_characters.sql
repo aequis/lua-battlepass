@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `character_battlepass` (
     `current_level` SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Current Battle Pass level',
     `current_exp` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Experience towards next level',
     `total_exp` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Lifetime accumulated experience',
-    `claimed_levels` TEXT DEFAULT NULL COMMENT 'Comma-separated list of claimed level rewards',
+    `claimed_levels` TEXT DEFAULT NULL COMMENT 'Comma-separated list of claimed level IDs',
     `last_daily_login` DATE DEFAULT NULL COMMENT 'Last daily login bonus date',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation timestamp',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last update timestamp',

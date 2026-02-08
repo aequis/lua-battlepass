@@ -9,7 +9,6 @@ A complete Battle Pass progression system for AzerothCore 3.3.5a with ALE.
 - Configurable XP sources (kills, quests, PvP, dungeons, etc.)
 - Multiple reward types: items, gold, titles, spells
 - In-game addon UI for tracking progress
-- NPC vendor for players without addon
 - Admin commands for management
 - Client-server communication via CSMH library
 
@@ -54,8 +53,6 @@ Edit values in `battlepass_config` table:
 | max_level | 100 | Maximum Battle Pass level |
 | exp_per_level | 1000 | Base XP per level |
 | exp_scaling | 1.1 | XP scaling factor |
-| npc_entry | 90100 | NPC vendor entry ID |
-| debug_mode | 0 | Enable debug logging |
 
 ## Commands
 
@@ -132,14 +129,11 @@ mod-battlepass/
 │   │   ├── CSMH_SMH.ext          # Server message handler
 │   │   └── CSMH_smallfolk.ext    # Serialization library
 │   └── battlepass/
-│       ├── 01_BP_Core.lua        # Core initialization
-│       ├── 02_BP_Database.lua    # Database operations
-│       ├── 03_BP_Progress.lua    # XP/level logic
-│       ├── 04_BP_Rewards.lua     # Reward distribution
-│       ├── 05_BP_Communication.lua # Client sync
-│       ├── 06_BP_Events.lua      # Game event hooks
-│       ├── 07_BP_Commands.lua    # Chat commands
-│       └── 08_BP_NPC.lua         # NPC gossip
+│       ├── battlepass_class.lua
+│       ├── battlepass_config.lua
+│       ├── battlepass_hook.lua
+│       ├── battlepass_repository.lua
+│       └── battlepass_reward.lua
 └── BattlePass/
     ├── BattlePass.toc
     ├── BattlePass.xml

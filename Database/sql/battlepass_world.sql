@@ -20,9 +20,7 @@ INSERT IGNORE INTO `battlepass_config` (`config_key`, `config_value`, `descripti
 ('enabled', '1', 'Enable/disable the entire Battle Pass system'),
 ('max_level', '100', 'Maximum Battle Pass level'),
 ('exp_per_level', '1000', 'Base experience required per level'),
-('exp_scaling', '1.1', 'Multiplier for exp required each level (1.0 = linear, >1 = exponential)'),
-('npc_entry', '90100', 'NPC entry ID for Battle Pass vendor'),
-('debug_mode', '0', 'Enable debug messages in server console');
+('exp_scaling', '1.1', 'Multiplier for exp required each level (1.0 = linear, >1 = exponential)');
 
 -- ----------------------------------------------------------------------------
 -- Table: battlepass_reward_types
