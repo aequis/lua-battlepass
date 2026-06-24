@@ -666,7 +666,9 @@ function BattlePassScrollBar_OnLoad(self)
     self:SetMinMaxValues(0, 100)
     self:SetValue(0)
     self:SetValueStep(1)
-    self:SetObeyStepOnDrag(true)
+    if self.SetObeyStepOnDrag then
+        self:SetObeyStepOnDrag(true)
+    end
 end
 
 function BattlePassScrollBar_OnValueChanged(self, value)

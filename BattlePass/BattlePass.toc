@@ -8,5 +8,5 @@
 
 smallfolk.lua
 CMH.lua
-BattlePass.xml
 BattlePass.lua
+BattlePass.xml
