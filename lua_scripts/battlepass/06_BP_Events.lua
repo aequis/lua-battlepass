@@ -10,12 +10,49 @@
 BattlePass = BattlePass or {}
 BattlePass.Events = BattlePass.Events or {}
 
+function BattlePass.IsEligiblePlayer(player)
+    if not BattlePass.IsEnabled() then
+        return false
+    end
+
+    if not player then
+        return false
+    end
+
+    local ok, result
+
+    if player.IsPlayer then
+        ok, result = pcall(function() return player:IsPlayer() end)
+        if ok and not result then
+            return false
+        end
+    end
+
+    for _, method in ipairs({ "IsPlayerBot", "IsPlayerbot", "IsBot" }) do
+        if player[method] then
+            ok, result = pcall(function() return player[method](player) end)
+            if ok and result then
+                return false
+            end
+        end
+    end
+
+    if player.GetSession then
+        ok, result = pcall(function() return player:GetSession() end)
+        if ok and result == nil then
+            return false
+        end
+    end
+
+    return true
+end
+
 -- ============================================================================
 -- Player Events
 -- ============================================================================
 
 local function OnPlayerLogin(event, player)
-    if not BattlePass.IsEnabled() then
+    if not BattlePass.IsEligiblePlayer(player) then
         return
     end
 
@@ -44,7 +81,7 @@ local function OnPlayerLogin(event, player)
 end
 
 local function OnPlayerLogout(event, player)
-    if not BattlePass.IsEnabled() then
+    if not BattlePass.IsEligiblePlayer(player) then
         return
     end
 
@@ -57,7 +94,7 @@ local function OnPlayerLogout(event, player)
 end
 
 local function OnCreatureKill(event, player, creature)
-    if not BattlePass.IsEnabled() then
+    if not BattlePass.IsEligiblePlayer(player) then
         return
     end
 
@@ -87,7 +124,7 @@ local function OnCreatureKill(event, player, creature)
 end
 
 local function OnQuestComplete(event, player, quest)
-    if not BattlePass.IsEnabled() then
+    if not BattlePass.IsEligiblePlayer(player) then
         return
     end
 
@@ -111,7 +148,7 @@ local function OnQuestComplete(event, player, quest)
 end
 
 local function OnPlayerLevelChange(event, player, oldLevel)
-    if not BattlePass.IsEnabled() then
+    if not BattlePass.IsEligiblePlayer(player) then
         return
     end
 
@@ -131,7 +168,7 @@ end
 -- ============================================================================
 
 local function OnHonorableKill(event, player, victim)
-    if not BattlePass.IsEnabled() then
+    if not BattlePass.IsEligiblePlayer(player) then
         return
     end
 
@@ -162,7 +199,7 @@ local function OnBattlegroundEndHook(event, bg, bgId, instanceId, winner)
     end
 
     for _, player in pairs(players) do
-        if player and player:IsInWorld() then
+        if BattlePass.IsEligiblePlayer(player) then
             local team = player:GetTeam()
             local isWinner = (winner == team)
             local sourceType = isWinner and "WIN_BATTLEGROUND" or "LOSE_BATTLEGROUND"
@@ -174,7 +211,7 @@ end
 
 -- Legacy function for manual calls
 function BattlePass.Events.OnBattlegroundEnd(player, isWinner)
-    if not BattlePass.IsEnabled() then
+    if not BattlePass.IsEligiblePlayer(player) then
         return
     end
 
@@ -190,7 +227,7 @@ end
 
 -- Awards custom XP (for admin commands or scripts)
 function BattlePass.Events.AwardCustomExp(player, amount, reason)
-    if not BattlePass.IsEnabled() then
+    if not BattlePass.IsEligiblePlayer(player) then
         return
     end
 
